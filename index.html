@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obesity & Weight Loss Program</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .bmi-calculator {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .result h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .result p {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .plan-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .plan-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .plan-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .plan-section li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .plan-section li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .info-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .info-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .consultation-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .file-upload {
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .file-upload:hover {
+            background: #f8f9fa;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .medicine-options {
+            margin-top: 20px;
+        }
+
+        .medicine-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .medicine-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .medicine-card p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .content {
+                padding: 20px 15px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏥 Obesity & Weight Loss Program</h1>
+            <p>Your Journey to a Healthier Life Starts Here</p>
+        </header>
+
+        <div class="content">
+            <!-- Section 1: BMI Assessment -->
+            <div class="section">
+                <h2><span class="step-number">1</span> Assess Your Weight</h2>
+                <div class="bmi-calculator">
+                    <div class="input-group">
+                        <label for="age">Age (years)</label>
+                        <input type="number" id="age" placeholder="Enter your age" min="10" max="120">
+                    </div>
+                    <div class="input-group">
+                        <label for="height">Height (cm)</label>
+                        <input type="number" id="height" placeholder="Enter your height in centimeters" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label for="weight">Weight (kg)</label>
+                        <input type="number" id="weight" placeholder="Enter your weight in kilograms" step="0.1">
+                    </div>
+                    <button class="btn" onclick="calculateBMI()">Calculate BMI & Get Your Plan</button>
+                    
+                    <div class="result" id="result">
+                        <h3>Your Results</h3>
+                        <p id="bmiValue"></p>
+                        <p id="bmiCategory"></p>
+                        <p id="healthAdvice"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Get Your Plan -->
+            <div class="section" id="planSection" style="display: none;">
+                <h2><span class="step-number">2</span> Your Personalized Plan</h2>
+                
+                <!-- Exercise Plan -->
+                <div class="plan-section">
+                    <h3>🏃‍♂️ Exercise Regime</h3>
+                    <div id="exercisePlan"></div>
+                </div>
+
+                <!-- Diet Plan -->
+                <div class="plan-section">
+                    <h3>🥗 Dietary Recommendations</h3>
+                    <div class="info-card">
+                        <h4>General Nutrition Guidelines for Weight Loss</h4>
+                        <ul>
+                            <li>Create a caloric deficit of 500-750 calories per day for safe weight loss (0.5-1 kg per week)</li>
+                            <li>Focus on whole, unprocessed foods - vegetables, fruits, lean proteins, whole grains</li>
+                            <li>Increase protein intake to 1.2-1.6g per kg body weight to preserve muscle mass</li>
+                            <li>Stay hydrated - drink at least 8-10 glasses of water daily</li>
+                            <li>Limit added sugars and refined carbohydrates</li>
+                            <li>Include healthy fats from nuts, seeds, avocados, and olive oil</li>
+                            <li>Practice portion control - use smaller plates and mindful eating</li>
+                            <li>Eat regular meals - don't skip breakfast</li>
+                            <li>Reduce sodium intake to less than 2,300mg per day</li>
+                            <li>Include fiber-rich foods (25-30g daily) for satiety</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h4>Foods to Prioritize</h4>
+                        <ul>
+                            <li>Leafy greens: spinach, kale, lettuce</li>
+                            <li>Lean proteins: chicken breast, fish, tofu, legumes</li>
+                            <li>Whole grains: brown rice, quinoa, oats</li>
+                            <li>Low-fat dairy or alternatives</li>
+                            <li>Fresh fruits (in moderation)</li>
+                            <li>Non-starchy vegetables</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Foods to Limit or Avoid</h4>
+                        <ul>
+                            <li>Sugary beverages and sodas</li>
+                            <li>Fried and processed foods</li>
+                            <li>White bread, pastries, and refined grains</li>
+                            <li>High-fat dairy products</li>
+                            <li>Processed meats</li>
+                            <li>Excessive alcohol consumption</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Medicine Options -->
+                <div class="plan-section">
+                    <h3>💊 Medical Treatment Options</h3>
+                    <p style="color: #666; margin-bottom: 20px;"><strong>Important:</strong> All medications must be prescribed and monitored by a healthcare professional. Pharmacotherapy should be combined with lifestyle modifications for optimal results.</p>
+                    
+                    <div class="info-card" style="background: #fff3cd; border-left: 4px solid #ffc107;">
+                        <h4>Treatment Guidelines</h4>
+                        <p><strong>Candidates for Drug Therapy:</strong></p>
+                        <ul>
+                            <li>BMI ≥30 kg/m² (Obesity)</li>
+                            <li>BMI 27-29.9 kg/m² with one or more weight-related comorbidities</li>
+                            <li>Have not achieved 5% weight loss with lifestyle interventions alone after 3-6 months</li>
+                        </ul>
+                        <p style="margin-top: 10px;"><strong>Treatment Goals:</strong> 5% weight loss is considered effective; medications are typically used long-term as obesity is a chronic condition</p>
+                    </div>
+
+                    <h4 style="color: #667eea; margin-top: 25px; margin-bottom: 15px;">First-Line Medications (GLP-1 Based Therapies - Most Effective)</h4>
+                    
+                    <div class="medicine-options">
+                        <div class="medicine-card" style="border-left: 4px solid #28a745;">
+                            <h4>Tirzepatide (Zepbound) - PREFERRED FIRST-LINE</h4>
+                            <p><strong>Type:</strong> Dual GIP/GLP-1 receptor agonist (Most effective agent available)</p>
+                            <p><strong>Mechanism:</strong> Increases satiety, slows gastric emptying, improves glucose-dependent insulin secretion</p>
+                            <p><strong>Indication:</strong> BMI ≥30 or BMI ≥27 with comorbidities; Also approved for moderate-to-severe obstructive sleep apnea</p>
+                            <p><strong>Dosage:</strong> Injectable, once weekly. Start 2.5mg, increase to 5mg, up to maximum 15mg weekly</p>
+                            <p><strong>Expected Weight Loss:</strong> 15-22.5% of body weight (highest efficacy)</p>
+                            <p><strong>Additional Benefits:</strong> Improves sleep apnea, glycemic control, cardiovascular risk factors</p>
+                            <p style="color: #28a745;"><strong>Clinical Note:</strong> Superior efficacy compared to all other agents in head-to-head trials</p>
+                        </div>
+
+                        <div class="medicine-card" style="border-left: 4px solid #28a745;">
+                            <h4>Semaglutide (Wegovy) - PREFERRED FIRST-LINE</h4>
+                            <p><strong>Type:</strong> GLP-1 receptor agonist</p>
+                            <p><strong>Mechanism:</strong> Reduces appetite, increases satiety, slows gastric emptying</p>
+                            <p><strong>Indication:</strong> BMI ≥30 or BMI ≥27 with comorbidities; Also approved for cardiovascular risk reduction in patients with established CVD</p>
+                            <p><strong>Dosage:</strong> Injectable, once weekly. Titrate from 0.25mg up to 2.4mg weekly over 16 weeks</p>
+                            <p><strong>Expected Weight Loss:</strong> 10-15% of body weight</p>
+                            <p><strong>Cardiovascular Benefits:</strong> Reduces major adverse cardiovascular events by 20% in patients with established CVD</p>
+                            <p><strong>Additional Approvals:</strong> Treatment of MASH (metabolic-associated steatohepatitis) with liver fibrosis</p>
+                            <p style="color: #28a745;"><strong>Preferred for:</strong> Patients with cardiovascular disease or at high CV risk</p>
+                        </div>
+
+                        <div class="medicine-card" style="border-left: 4px solid #28a745;">
+                            <h4>Liraglutide (Saxenda)</h4>
+                            <p><strong>Type:</strong> GLP-1 receptor agonist (first approved GLP-1 for obesity)</p>
+                            <p><strong>Mechanism:</strong> Appetite suppression, increases satiety</p>
+                            <p><strong>Indication:</strong> BMI ≥30 or BMI ≥27 with weight-related conditions</p>
+                            <p><strong>Dosage:</strong> Injectable, once daily. Titrate from 0.6mg to 3.0mg daily over 5 weeks</p>
+                            <p><strong>Expected Weight Loss:</strong> 5-10% of body weight</p>
+                            <p><strong>Clinical Note:</strong> Less effective than semaglutide and tirzepatide; daily injection required</p>
+                        </div>
+
+                        <div class="info-card" style="background: #e7f3ff; border-left: 4px solid #2196F3; margin-top: 15px;">
+                            <h4>GLP-1 Medication Important Information</h4>
+                            <p><strong>Common Side Effects:</strong> Nausea (25-40%), vomiting, diarrhea, constipation (usually improve with time)</p>
+                            <p><strong>Management Tips:</strong> Eat smaller meals, eat slowly, avoid high-fat/greasy foods, slower dose titration if needed</p>
+                            <p><strong>Contraindications:</strong></p>
+                            <ul>
+                                <li>Personal or family history of medullary thyroid cancer or MEN 2A/2B</li>
+                                <li>Pregnancy or planning pregnancy</li>
+                                <li>Severe gastroparesis or inflammatory bowel disease</li>
+                            </ul>
+                            <p><strong>Pre-Surgery:</strong> May need to be held before elective surgery due to delayed gastric emptying</p>
+                            <p><strong>Long-term Use:</strong> Weight regain occurs if medication is stopped; typically used indefinitely</p>
+                        </div>
+                    </div>
+
+                    <h4 style="color: #667eea; margin-top: 30px; margin-bottom: 15px;">Second-Line Medications (Alternatives if GLP-1 not suitable)</h4>
+
+                    <div class="medicine-options">
+                        <div class="medicine-card" style="border-left: 4px solid #ff9800;">
+                            <h4>Phentermine-Topiramate (Qsymia)</h4>
+                            <p><strong>Type:</strong> Combination appetite suppressant</p>
+                            <p><strong>Mechanism:</strong> Phentermine (sympathomimetic) + Topiramate (anticonvulsant) - suppresses appetite, increases satiety</p>
+                            <p><strong>Indication:</strong> BMI ≥30 or BMI ≥27 with comorbidities (without cardiovascular disease or uncontrolled hypertension)</p>
+                            <p><strong>Dosage:</strong> Oral, once daily. Start 3.75/23mg, increase to 7.5/46mg, up to max 15/92mg</p>
+                            <p><strong>Expected Weight Loss:</strong> 8-10% of body weight</p>
+                            <p><strong>Additional Benefits:</strong> May help with migraine prevention (topiramate component)</p>
+                            <p><strong>Important Warnings:</strong> Teratogenic - requires monthly pregnancy testing; avoid in cardiovascular disease</p>
+                            <p><strong>Contraindications:</strong> Pregnancy, glaucoma, hyperthyroidism, uncontrolled hypertension, cardiovascular disease</p>
+                        </div>
+
+                        <div class="medicine-card" style="border-left: 4px solid #ff9800;">
+                            <h4>Naltrexone-Bupropion (Contrave)</h4>
+                            <p><strong>Type:</strong> Combination opioid antagonist + antidepressant</p>
+                            <p><strong>Mechanism:</strong> Affects brain reward pathways and appetite regulation through POMC neurons</p>
+                            <p><strong>Indication:</strong> BMI ≥30 or BMI ≥27 with comorbidities</p>
+                            <p><strong>Dosage:</strong> Oral, twice daily. Titrate from 1 tablet daily to 2 tablets twice daily over 4 weeks</p>
+                            <p><strong>Expected Weight Loss:</strong> 4-6% of body weight</p>
+                            <p><strong>Potential Benefits:</strong> May help with depression, smoking cessation, alcohol use disorder</p>
+                            <p><strong>Side Effects:</strong> Nausea (30%), headache, constipation, insomnia; monitor for depression/suicidal thoughts</p>
+                            <p><strong>Contraindications:</strong> Seizure disorders, bulimia, chronic opioid use, u
